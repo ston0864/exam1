@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit My Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col s6">
+                <h3>Edit My Account</h3>
+                <form action="/update/{{account_edit.id}}" method="post">
+                    {% csrf_token %}
+                    <input type='text' name='index_first_name' value={{account_edit.first_name}}>
+                    <label for="index_first_name">First Name</label>
+
+                    <input type='text' name='index_last_name' value={{account_edit.last_name}}>
+                    <label for="index_last_name">Last Name</label>
+
+                    <input type='text' name='index_email' value={{account_edit.email}}>
+                    <label for="index_email">Email</label>
+
+                    <br><br>
+                    
+                    <button class="btn waves-effect waves-light" type="submit">Update
+                        <i class="material-icons right">send</i>
+                    </button>
+                </form>
+            </div>
+            <div class="col s6">
+                <a href="/quotes">Back | </a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        M.AutoInit();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        li {
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col s6">
+                <h3>Welcome {{user.first_name}} {{user.last_name}}!</h3>
+                <h3>Quotes</h3>
+                <ul>
+                    {% for posts in all_posts %}
+                    <li>
+                        {{posts.author}}:
+                        {{posts.quote}}
+                        <p>Posted by <a href="/user/{{posts.poster.id}}">{{posts.poster.first_name}}
+                                {{posts.poster.last_name}}</a></p>
+                        <p> people like this {{posts.likes.count}}</p>
+                        
+                        <a href="/add_like/{{posts.id}}"><button>Like</button></a>
+
+                        <a href="/delete_post/{{posts.id}}">Delete</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col s6">
+                <a href="/myaccount/{{user.id}}">Edit My Account | </a>
+                <a href="/logout">Logout</a>
+                <h3>Add a Quote!</h3>
+                <form action="/add_quote" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="quote_author">
+                    <label for="quote_author">Author</label>
+                    <textarea name="quote_quote" cols="30" rows="10"></textarea>
+                    <label for="quote_quote">Quote</label>
+                    <br>
+                    <button class="btn waves-effect waves-light" type="submit">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        M.AutoInit();
+    </script>
+</body>
+
+</html>
